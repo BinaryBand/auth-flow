@@ -34,28 +34,34 @@ type KeyInputProps = {
   value?: string;
 };
 
+type KeyInputState = {
+  value: string;
+};
+
 class KeyInput extends React.Component<KeyInputProps> {
   private onPress?: (value?: string) => void;
-  private value: string;
+  public state: KeyInputState;
 
   constructor(props: KeyInputProps) {
     super(props);
 
     this.update = this.update.bind(this);
     this.onPress = props.onPress;
-    this.value = props.value || "";
+    this.state = {
+      value: props.value || ""
+    };
   }
 
   private update(): void {
     if (this.onPress) {
-      this.onPress(this.value);
+      this.onPress(this.state.value);
     }
   }
 
   public render(): JSX.Element {
     return (
       <KeyInputContainer onPress={this.update}>
-        <Text style={passcodeStyle.keyContent}>{this.value}</Text>
+        <Text style={passcodeStyle.keyContent}>{this.state.value}</Text>
       </KeyInputContainer>
     );
   }
@@ -88,6 +94,12 @@ export default class PasscodeInput extends React.Component<PasscodeProps> {
     this.state = {
       value: props.value || ""
     };
+  }
+
+  public componentDidUpdate(): void {
+    if (this.props.value?.length !== this.state.value.length) {
+      this.setState({ value: this.props.value });
+    }
   }
 
   private update(value: string): void {

@@ -1,5 +1,5 @@
-import React from "react";
-import { SafeAreaView, Text, Button, Alert } from "react-native";
+import React, { useEffect } from "react";
+import { SafeAreaView, Text, Button, TextInput, Alert } from "react-native";
 
 import { useAuth } from "../../contexts/AuthContext";
 import PasscodeInput from "../../components/PasscodeInput";
@@ -7,16 +7,15 @@ import PasscodeInput from "../../components/PasscodeInput";
 
 export default function ConfirmPasscodePage(): JSX.Element {
   const { signIn, signOut } = useAuth();
-  const [state, setState] = React.useState({ passcode: "", disabled: true });
+  const [passcode, setPasscode] = React.useState("");
+  const [disabled, setDisabled] = React.useState(true);
 
   const updatePasscode = (passcode: string): void => {
-    const disabled: boolean = passcode.length !== 6;
-    setState({ passcode, disabled });
+    setPasscode(passcode);
+    setDisabled(passcode.length !== 6);
   };
 
   const signInWrapper = async (): Promise<void> => {
-    updatePasscode("asd");
-
     // if (!(await signIn(state.passcode))) {
     //   // Alert.alert("Wrong Passcode");
     //   updatePasscode("");
@@ -25,9 +24,11 @@ export default function ConfirmPasscodePage(): JSX.Element {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Text>{state.passcode}</Text>
-      <PasscodeInput onChangeText={updatePasscode} value={state.passcode} />
-      <Button disabled={state.disabled} title="Sign In" onPress={signInWrapper} />
+      <Text>{passcode}</Text>
+
+      <PasscodeInput value={passcode} onChangeText={updatePasscode} />
+      <Button title="Cancel" onPress={() => updatePasscode("")} />
+      <Button disabled={disabled} title="Sign In" onPress={signInWrapper} />
       <Button title="Sign Out" onPress={signOut} />
     </SafeAreaView>
   );
