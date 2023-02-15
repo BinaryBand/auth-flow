@@ -179,9 +179,9 @@ const passcodeStyle = StyleSheet.create({
     elevation: 5,
 
     // Dimensions
-    width: 68,
-    height: 68,
-    borderRadius: 68,
+    width: 65,
+    height: 65,
+    borderRadius: 65,
 
     // Child position
     justifyContent: "center", // Centered horizontally
