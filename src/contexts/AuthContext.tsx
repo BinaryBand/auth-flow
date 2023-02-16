@@ -85,7 +85,7 @@ export class AuthProvider extends React.Component<AuthProps> {
         signOut: this.signOut.bind(this),
         setLock: this.setLock.bind(this),
         unlock: this.unlock.bind(this),
-        lock: this.lock.bind(this)
+        lock: this.lock.bind(this),
       }}>
         {this.props.children}
       </AuthContext.Provider>
